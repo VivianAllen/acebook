@@ -52,10 +52,14 @@ Rails.application.configure do
   config.log_level = :debug
 
   config.paperclip_defaults = {
-  :storage => :s3,
-  :preserve_files => true,
-  :bucket => "elasticbeanstalk-eu-west-2-862365935758"
-}
+    storage: :s3,
+    s3_credentials: {
+      bucket: ENV.fetch('S3_BUCKET_NAME'),
+      access_key_id: ENV.fetch('AWS_ACCESS_KEY_ID'),
+      secret_access_key: ENV.fetch('AWS_SECRET_ACCESS_KEY'),
+      s3_region: ENV.fetch('AWS_REGION'),
+    }
+  }
 
   # Prepend all log lines with the following tags.
   config.log_tags = [ :request_id ]
